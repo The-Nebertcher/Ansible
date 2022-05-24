@@ -1,0 +1,13 @@
+---
+- hosts: test
+  become: true
+  tasks:
+
+    - name: Change file in /etc/yum/pluginconf.d/rhnplugin.conf
+      replace:
+        path: /etc/yum/pluginconf.d/rhnplugin.conf
+        regexp: 'enabled = 1'
+        replace: "enabled = 0"
+
+    - name: Run Yum clean all
+      shell: yum clean all

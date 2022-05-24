@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  gather_facts: False
+  vars_prompt:
+  - name: package
+    prompt: "What is the name of the package you want to know the version of?"
+    private: no
+
+  tasks:
+    - name: Check specific package version
+      shell: "yum info {{ package }} >> /tmp/output && cat /tmp/output | grep 'Version     : ' && rm -f /tmp/output"
+      ignore_errors: yes
+      register: result
+    - debug:
+        msg: "{{ package }} is on {{ result.stdout }}"
+
+
+

@@ -1,0 +1,20 @@
+- hosts: test
+  become: yes
+  tasks:
+
+    - name: Grab unit files for comparison
+      shell: | 
+        rm -f /tmp/services
+        systemctl list-units >> /tmp/services
+
+    - name: Run Yum update
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Reboot
+      reboot:
+      #exclude:
+      #register: response
+
+    #- debug: msg="{{ response.stdout }}"
